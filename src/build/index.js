@@ -1,14 +1,50 @@
 var path = require('path');
-var dot = require('dot');
 var fs = require('fs');
 
-var distPath = path.join(__dirname, '../..');
-var templatesPath = path.join(__dirname, '../templates');
+var getTemplates = require('./getTemplates');
+var getBlogList = require('./getBlogList');
 
-var mainTemplate = fs.readFileSync(path.join(templatesPath, 'main.html'), 'utf8');
-var mainTemplateFunc = dot.template(mainTemplate);
+var config = {
+    distPath: path.join(__dirname, '../../dist'),
+    serverDistPath: 'dist'
+};
 
-var result = mainTemplateFunc({header: 'lol', footer: 'asd', body: 'tr'});
+var templates = getTemplates();
 
-console.log(result);
+var topMenu = {
+    tabs: [
+        {text: 'Blog', href: config.serverDistPath + '/blog'},
+        {text: 'About', href: config.serverDistPath + '/about'}
+    ]
+};
 
+var header = templates.header({
+    topMenu: topMenu
+});
+
+var footer = templates.footer();
+
+var blogList = getBlogList();
+
+function getBlogListForTemplate(blogList) {
+    return blogList.map(function(el) {
+        return el.config;
+    });
+}
+
+var strBlogList = templates.articleList({
+    list: getBlogListForTemplate(blogList)
+});
+
+var body = templates.body({
+    blogList: strBlogList
+});
+
+var main = templates.main({
+    title: 'main page',
+    header: header,
+    footer: footer,
+    body: body
+});
+
+fs.writeFileSync(path.join(config.distPath, 'index.html'), main, 'utf8');
