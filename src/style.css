@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font: 17px/30px Arial, Helvetica, sans-serif;
 }
 
 ul {
@@ -9,18 +10,16 @@ ul {
 
 a {
     text-decoration: none;
-    color: #444444;
+    color: #535353;
 }
 
 a:hover {
-    color: #747474;
+    color: #7b7b7b;
 }
 
 .page {
     margin: 0 auto;
     width: 700px;
-    font-size: 17px;
-    line-height: 30px;
 }
 
 .header {
@@ -36,44 +35,71 @@ a:hover {
     font-size: 0;
 }
 
-.topMenu_tab {
+.topMenu__tab {
     margin: 0 15px 0 0;
     display: inline-block;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 700;
 }
 
-.blogList {
+.topMenu__tab a {
+    display: inline-block;
+}
+
+.topMenu__tab._current a {
+    border-bottom: 2px solid #535353;
+}
+
+.topMenu__tab._current a:hover {
+    border-bottom: 2px solid #7b7b7b;
+}
+
+.mainPage {
 
 }
 
-.articleList {
+.mainPage__article {
 
 }
 
-.articleList__inner {
-    list-style: none;
+.mainPage__article h2 {
+    margin: 20px 0;
+    font-size: 27px;
+    line-height: 30px;
+    font-weight: 700;
 }
 
-.articleList__item {
-    line-height: 18px;
-    cursor: default;
+.mainPage__articleDescription {
+
 }
 
-.articleList__itemName {
-    font-size: 19px;
+.mainPage__articleDate {
+    color: #7f7f7f;
+    font-size: 15px;
 }
 
-.articleList__itemDescription {
-    font-size: 17px;
-    font-style: italic;
+.article {
+
 }
 
-.articleList__itemDate {
-    font-size: 16px;
-    font-style: italic;
-    color: #A0A0A0;
+.article h2 {
+    margin: 20px 0;
+    font-size: 27px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #535353;
 }
 
+.article__text {
 
+}
 
+.article__date {
+    color: #7f7f7f;
+    font-size: 15px;
+}
+
+.author__contacts {
+    margin: 0 0 0 25px;
+    list-style: square outside;
+}

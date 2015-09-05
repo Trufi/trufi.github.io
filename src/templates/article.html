@@ -1,0 +1,11 @@
+<div class="article">
+    {{? it.config.title }}
+        <h2>{{=it.config.title}}</h2>
+    {{?}}
+    <div class="article__text">
+        {{=it.text}}
+    </div>
+    {{? it.config.date }}
+        <div class="article__date">{{=it.config.date}}</div>
+    {{?}}
+</div>
