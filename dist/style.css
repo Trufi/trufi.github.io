@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #444444;
+}
+
+a:hover {
+    color: #747474;
+}
+
+.page {
+    margin: 0 auto;
+    width: 700px;
+    font-size: 17px;
+    line-height: 30px;
+}
+
+.header {
+    padding: 50px 0 10px;
+}
+
+.body {
+}
+
+.topMenu {
+    margin: 0 0 0 10px;
+    list-style: none;
+    font-size: 0;
+}
+
+.topMenu_tab {
+    margin: 0 15px 0 0;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.blogList {
+
+}
+
+.articleList {
+
+}
+
+.articleList__inner {
+    list-style: none;
+}
+
+.articleList__item {
+    line-height: 18px;
+    cursor: default;
+}
+
+.articleList__itemName {
+    font-size: 19px;
+}
+
+.articleList__itemDescription {
+    font-size: 17px;
+    font-style: italic;
+}
+
+.articleList__itemDate {
+    font-size: 16px;
+    font-style: italic;
+    color: #A0A0A0;
+}
+
+
+

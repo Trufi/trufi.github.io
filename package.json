@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node src/build"
+    "start": "watch 'node src/build' ./src"
   },
   "author": {
     "name": "Mstislav Zhivodkov",
@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dot": "^1.0.3"
+    "dot": "^1.0.3",
+    "watch": "^0.16.0"
   }
 }

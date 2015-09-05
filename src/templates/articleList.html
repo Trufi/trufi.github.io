@@ -2,9 +2,9 @@
     <ul class="articleList__inner">
         {{~it.list :value:index}}
         <li class="articleList__item">
-            <div class="articleList__itemName"><a href="{{=value.href}}">{{=value.name}}</a></div>
+            <div class="articleList__itemName"><a href="{{=value.href}}">{{=value.title}}</a></div>
             <div class="articleList__itemDescription">{{=value.description}}</div>
-            <div class="articleList__itemData">{{=value.data}}</div>
+            <div class="articleList__itemDate">{{=value.date}}</div>
         </li>
         {{~}}
     </ul>

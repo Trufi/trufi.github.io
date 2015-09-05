@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>{{=it.title}}</title>
+
+    <link rel="stylesheet" href="{{=it.styleHref}}"/>
 </head>
 <body>
-    {{=it.header}}
-    {{=it.body}}
-    {{=it.footer}}
+    <div class="page">
+        {{=it.header}}
+
+        <div class="body">
+            {{=it.body}}
+        </div>
+
+        {{=it.footer}}
+    </div>
 </body>
 </html>
