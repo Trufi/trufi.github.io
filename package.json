@@ -1,10 +1,9 @@
 {
   "name": "trufi.github.io",
-  "version": "0.0.1",
   "description": "",
   "private": true,
   "scripts": {
-    "start": "watch 'node src/build' ./src"
+    "start": "node src/build"
   },
   "author": {
     "name": "Mstislav Zhivodkov",
@@ -13,7 +12,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dot": "^1.0.3",
-    "watch": "^0.16.0"
+    "dot": "^1.0.3"
   }
 }
