@@ -7,13 +7,13 @@ var getHeader = require('./getHeader');
 var saveStyle = require('./saveStyle');
 
 var config = {
-    distPath: path.join(__dirname, '../../dist'),
-    serverDistPath: '/dist'
+    distPath: path.join(__dirname, '../..'),
+    serverDistPath: ''
 };
 
 config.topMenu = {
     tabs: [
-        {text: 'Блог', href: config.serverDistPath},
+        {text: 'Блог', href: config.serverDistPath + '/'},
         {text: 'Автор', href: config.serverDistPath + '/author'}
     ]
 };
