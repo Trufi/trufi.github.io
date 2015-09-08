@@ -2,5 +2,6 @@
   "title": "WebGL Introduction",
   "titleHtml": "WebGL Introduction",
   "description": "test",
-  "date": "05.09.2015"
+  "date": "05.09.2015",
+  "draft": true
 }

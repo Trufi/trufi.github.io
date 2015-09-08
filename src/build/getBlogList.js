@@ -26,6 +26,11 @@ module.exports = function(config) {
         return article;
     });
 
+    // remove drafts from list
+    blogList = blogList.filter(function(blog) {
+        return !blog.config.draft;
+    });
+
     // TODO: сортировка по дате
     return blogList;
 };
