@@ -60,6 +60,21 @@ blogList.forEach(function(blog) {
         body: blog.text
     });
 
-    fs.writeFileSync(path.join(config.distPath, 'blog', blog.config.name + '.html'), blogPage, 'utf8');
+    try {
+        fs.mkdirSync(path.join(config.distPath, 'blog', blog.config.name));
+    } catch(e) {}
+
+    if (blog.images) {
+        try {
+            fs.mkdirSync(path.join(config.distPath, 'blog', blog.config.name, 'images'));
+        } catch(e) {}
+
+        blog.images.forEach(function(name) {
+            var image = fs.readFileSync(path.join(__dirname, '../pages/blog', blog.config.name, 'images', name));
+            fs.writeFileSync(path.join(config.distPath, 'blog', blog.config.name, 'images', name), image);
+        });
+    }
+
+    fs.writeFileSync(path.join(config.distPath, 'blog', blog.config.name, 'index.html'), blogPage, 'utf8');
 });
 
