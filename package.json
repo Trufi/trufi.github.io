@@ -3,7 +3,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node src/build"
+    "start": "chokidar \"src/**/*.*\" --verbose -c \"npm run build\"",
+    "build": "node src/build"
   },
   "author": {
     "name": "Mstislav Zhivodkov",
@@ -13,5 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "dot": "^1.0.3"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^1.0.1"
   }
 }
