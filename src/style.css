@@ -48,6 +48,11 @@ a:hover {
     padding: 0 2px;
 }
 
+.topMenu__tab._disable {
+    color: #d3d3d3;
+    cursor: default;
+}
+
 .topMenu__tab._current a {
     border-bottom: 2px solid #535353;
 }
