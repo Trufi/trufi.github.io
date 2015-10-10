@@ -5,7 +5,7 @@ var fs = require('fs');
 var templates = require('./getTemplates')();
 
 module.exports = function(config) {
-    var blogPath = path.join(__dirname, '../pages/shorts');
+    var blogPath = path.join(__dirname, '../pages/short');
     var articleDirNames = fs.readdirSync(blogPath);
 
     var blogList = articleDirNames.map(function(dirName) {
@@ -20,7 +20,7 @@ module.exports = function(config) {
         };
 
         article.config.name = dirName;
-        article.config.href = config.serverDistPath + '/shorts/' + dirName;
+        article.config.href = config.serverDistPath + '/short/' + dirName;
 
         article.text = templates.article(article);
 

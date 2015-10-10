@@ -13,13 +13,14 @@ var config = {
 
 config.topMenu = {
     tabs: [
-        {text: 'Shorts', href: config.serverDistPath + '/'},
+        {text: 'Short', href: config.serverDistPath + '/'},
+        {text: 'Long', disable: true},
         {text: 'Author', href: config.serverDistPath + '/author'}
     ]
 };
 
 var templates = require('./getTemplates')();
-var shortsList = require('./getBlogList')(config);
+var shortList = require('./getBlogList')(config);
 
 saveStyle(config);
 
@@ -49,8 +50,8 @@ var authorPageHtml = templates.main({
 });
 fs.writeFileSync(path.join(config.distPath, 'author.html'), authorPageHtml, 'utf8');
 
-// shorts pages
-shortsList.forEach(function(blog) {
+// short pages
+shortList.forEach(function(blog) {
     var blogPage = templates.main({
         titleHtml: blog.config.titleHtml,
         styleHref: config.serverDistPath + '/style.css',
@@ -61,20 +62,20 @@ shortsList.forEach(function(blog) {
     });
 
     try {
-        fs.mkdirSync(path.join(config.distPath, 'shorts', blog.config.name));
+        fs.mkdirSync(path.join(config.distPath, 'short', blog.config.name));
     } catch(e) {}
 
     if (blog.images) {
         try {
-            fs.mkdirSync(path.join(config.distPath, 'shorts', blog.config.name, 'images'));
+            fs.mkdirSync(path.join(config.distPath, 'short', blog.config.name, 'images'));
         } catch(e) {}
 
         blog.images.forEach(function(name) {
-            var image = fs.readFileSync(path.join(__dirname, '../pages/shorts', blog.config.name, 'images', name));
-            fs.writeFileSync(path.join(config.distPath, 'shorts', blog.config.name, 'images', name), image);
+            var image = fs.readFileSync(path.join(__dirname, '../pages/short', blog.config.name, 'images', name));
+            fs.writeFileSync(path.join(config.distPath, 'short', blog.config.name, 'images', name), image);
         });
     }
 
-    fs.writeFileSync(path.join(config.distPath, 'shorts', blog.config.name, 'index.html'), blogPage, 'utf8');
+    fs.writeFileSync(path.join(config.distPath, 'short', blog.config.name, 'index.html'), blogPage, 'utf8');
 });
 

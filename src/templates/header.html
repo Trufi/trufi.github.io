@@ -1,8 +1,11 @@
 <div class="header">
     <ul class="topMenu">
-        <li class="topMenu__tab _disable"><span>Longs</span></li>
         {{~it.topMenu.tabs :value:index}}
-            <li class="topMenu__tab{{?value.isCurrent}} _current{{?}}"><a href="{{=value.href}}">{{=value.text}}</a></li>
+        	{{?value.disable}}
+            	<li class="topMenu__tab _disable"><span>{{=value.text}}</span></li>
+        	{{??}}
+        		<li class="topMenu__tab{{?value.isCurrent}} _current{{?}}"><a href="{{=value.href}}">{{=value.text}}</a></li>
+        	{{?}}
         {{~}}
     </ul>
 </div>
