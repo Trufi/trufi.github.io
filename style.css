@@ -97,6 +97,20 @@ a:hover {
     color: #535353;
 }
 
+.article p {
+    margin: 40px 0;
+}
+
+.article__img {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.article__imgDesc {
+    text-align: center;
+    font-style: italic;
+}
+
 .article__text {
 
 }
