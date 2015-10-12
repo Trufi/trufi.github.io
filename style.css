@@ -20,7 +20,11 @@ a:hover {
 .page {
     margin: 0 auto;
     padding: 0 5px;
-    width: 690px;
+    width: 100%;
+    max-width: 690px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .header {
@@ -33,13 +37,12 @@ a:hover {
 .topMenu {
     margin: 0 0 0 10px;
     list-style: none;
-    font-size: 0;
 }
 
 .topMenu__tab {
     margin: 0 15px 0 0;
     display: inline-block;
-    font-size: 19px;
+    font-size: 1.12em;
     font-weight: 700;
 }
 
@@ -71,8 +74,8 @@ a:hover {
 
 .mainPage__article h2 {
     margin: 20px 0;
-    font-size: 27px;
-    line-height: 30px;
+    font-size: 1.59em;
+    line-height: 1.11em;
     font-weight: 700;
 }
 
@@ -82,7 +85,7 @@ a:hover {
 
 .mainPage__articleDate {
     color: #7f7f7f;
-    font-size: 15px;
+    font-size: 0.88em;
 }
 
 .article {
@@ -91,8 +94,8 @@ a:hover {
 
 .article h2 {
     margin: 20px 0;
-    font-size: 27px;
-    line-height: 30px;
+    font-size: 1.59em;
+    line-height: 1.11em;
     font-weight: 700;
     color: #535353;
 }
@@ -117,7 +120,7 @@ a:hover {
 
 .article__date {
     color: #7f7f7f;
-    font-size: 15px;
+    font-size: 0.88em;
 }
 
 .author__contacts {

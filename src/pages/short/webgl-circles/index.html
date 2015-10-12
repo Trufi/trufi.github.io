@@ -9,11 +9,11 @@
 </style>
 
 <p>
-    <i>Возможно, суровые бородатые дядьки, которые вовсю разрабатывают на&nbsp;OpenGL закидают меня помидорами, но, когда я&nbsp;узнал об&nbsp;этом, то&nbsp;радовался как маленький ребёнок.</i>
+    <i>Возможно, суровые бородатые дядьки, которые вовсю разрабатывают на&nbsp;OpenGL, закидают меня помидорами, но когда я&nbsp;узнал об&nbsp;этом, радовался как маленький ребёнок.</i>
 </p>
 
 <p>
-    На&nbsp;протяжении последних двух месяцев я&nbsp;считал, что WebGL только и&nbsp;умеет, что рисовать только треугольники.
+    На&nbsp;протяжении последних двух месяцев я&nbsp;считал, что WebGL только и&nbsp;умеет, что рисовать треугольники.
 </p>
 
 <div class="article__img">
@@ -24,7 +24,7 @@
 </div>
 
 <p>
-    Чтобы нарисовать квадрат, ему нужно два треугольника:
+    Например, чтобы нарисовать квадрат, ему нужно два треугольника:
 </p>
 
 <div class="article__img">
@@ -32,7 +32,7 @@
 </div>
 
 <p>
-    А&nbsp;чтобы нарисовать круг, нужно немного попотеть! И&nbsp;всё равно это будет не&nbsp;совсем круг:
+    А&nbsp;чтобы нарисовать круг, придётся немного попотеть! И&nbsp;всё равно, это будет не&nbsp;совсем круг:
 </p>
 
 <div class="article__img">
@@ -43,7 +43,7 @@
 </div>
 
 <p>
-    Но неожиданно оказывается, что есть гораздо более простой и приятный способ:
+    Но неожиданно оказывается, что есть более простой способ:
 </p>
 
 <div class="article__img">
@@ -52,15 +52,15 @@
         <img style="position: absolute; width: 200px;" src="./images/one_circle.svg" alt="Круг, нарисованный простым способом">
     </div>
     <div class="article__imgDesc">
-        Как вы думаете, сколько здесь используется треугольников? <span class="showspoiler">Показать</span> <span class="spoilerdesc">1</span>
+        Как вы думаете, сколько здесь используется треугольников? <span class="showspoiler">Показать</span> <span class="spoilerdesc">Всего 1!</span>
     </div>
 </div>
 
 <p>
-    Мы&nbsp;знаем, что фрагментый шейдер вычисляется для каждого пикселя, а&nbsp;атрибуты переданные в&nbsp;него через вершинный шейдер линейно интерполируются между вершинами треугольника.
+    Мы&nbsp;знаем, что фрагментый шейдер вычисляется для каждого пикселя, а&nbsp;атрибуты, переданные в&nbsp;него через вершинный шейдер, линейно интерполируются между вершинами треугольника.
 </p>
 <p>
-    Значит, можно задать для вершин специальную систему координат, указав их местоположение и&nbsp;передав в&nbsp;шейдеры. Точно также как передаются uv-координаты при отрисовки текстуры.
+    Значит, можно задать специальную систему координат, в&nbsp;которой укажем местоположение вершин треугольника и передадим их в&nbsp;шейдеры. Точно так же, как передаются uv-координаты при отрисовке текстуры.
 </p>
 
 <div class="article__img">
@@ -68,11 +68,11 @@
 </div>
 
 <p>
-    Получается, что, когда вызывается фрагментый шейдер, мы&nbsp;знаем координаты пикселя в&nbsp;нашей системе координат и&nbsp;можем на&nbsp;их&nbsp;основе определить цвет.
+    Получается, что когда вызывается фрагментый шейдер, мы&nbsp;знаем положение пикселя в&nbsp;новой системе координат и&nbsp;можем на&nbsp;их&nbsp;основе вычислить цвет.
 </p>
 
 <p>
-    Например, мы говорим, что, если пиксель находится в круге с центром (Cx, Cy) и радиусом R, т.е.
+    На примере выше мы говорим, что если пиксель находится в круге с&nbsp;центром&nbsp;(Cx,&nbsp;Cy) и&nbsp;радиусом&nbsp;R, т.е.
     <span class="article__img" style="display: inline-block; width: 100%; margin: 15px 0;">
         <img src="./images/formula.svg" alt="(X - Cx)^2 + (Y - Cy)^2 < R^2" style="width: 300px; height: 40px;">
     </span>
@@ -80,11 +80,18 @@
 </p>
 
 <p>
-    Вместо круга, можно придумать что-нибудь и&nbsp;более интересное:
+    Вместо круга можно придумать что-нибудь более интересное:
 </p>
 
 <div class="article__img">
-    <canvas id="wheel"></canvas>
+    <div id="wheel">
+        <div id="wheel-without-webgl" class="article__img" style="display: none;">
+            <img src="./images/wheel.png" alt="Шестерёнка, если нет WebGL" width="200">
+            <div class="article__imgDesc">
+                Увы, шестерёнка не крутится, т.к. ваш браузер не поддерживает WebGL :(
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -146,7 +153,7 @@
 
 <script>
     (function() {
-        function checkWebGl() {
+        function checkWebGL() {
             try {
                 if (window.WebGLRenderingContext) {
                     var canvas = document.createElement('canvas');
@@ -155,14 +162,22 @@
             } catch (error) {}
         }
 
+
+        if (!checkWebGL()) {
+            document.getElementById('wheel-without-webgl').style.display = 'block';
+            return;
+        }
+
         var size = [200, 200];
         var pr = 2;
 
-        var canvas = document.getElementById('wheel');
+        var container = document.getElementById('wheel');
+        var canvas = document.createElement('canvas');
         canvas.width = size[0] * pr;
         canvas.height = size[1] * pr;
         canvas.style.width = size[0] + 'px';
         canvas.style.height = size[1] + 'px';
+        container.appendChild(canvas);
 
         var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
         gl.viewport(0, 0, size[0] * pr * 1.9, size[1] * pr * 1.9);
@@ -220,6 +235,19 @@
         var lastRenderTime = Date.now();
         var angle = 0;
 
+        gl.useProgram(program);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+        gl.enableVertexAttribArray(uvAttribution);
+        gl.vertexAttribPointer(uvAttribution, 2, gl.FLOAT, false, 0, 0);
+
+        gl.uniform1f(angleUniform, angle);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+        gl.enableVertexAttribArray(vertexVectorAttribution);
+        gl.vertexAttribPointer(vertexVectorAttribution, 3, gl.FLOAT, false, 0, 0);
+
         function render() {
             requestAnimationFrame(render);
 
@@ -227,24 +255,10 @@
             var dt = lastRenderTime - time;
 
             angle += dt / 10000;
-
-            gl.clearColor(1.0, 1.0, 1.0, 1.0);
-            gl.enable(gl.DEPTH_TEST);
-
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-            gl.useProgram(program);
-
-            gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
-            gl.enableVertexAttribArray(uvAttribution);
-            gl.vertexAttribPointer(uvAttribution, 2, gl.FLOAT, false, 0, 0);
-
             gl.uniform1f(angleUniform, angle);
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-
-            gl.enableVertexAttribArray(vertexVectorAttribution);
-            gl.vertexAttribPointer(vertexVectorAttribution, 3, gl.FLOAT, false, 0, 0);
+            gl.clearColor(1.0, 1.0, 1.0, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
             gl.drawArrays(gl.TRIANGLES, 0, 3);
 
             lastRenderTime = time;
