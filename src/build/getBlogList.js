@@ -11,11 +11,16 @@ module.exports = function(config) {
     var blogList = articleDirNames.map(function(dirName) {
         var articlePath = path.join(blogPath, dirName);
         var pageFile = fs.readFileSync(path.join(articlePath, 'index.html'), 'utf8');
-        var descriptionFile = fs.readFileSync(path.join(articlePath, 'description.html'), 'utf8');
+        var description;
+
+        try {
+            var descriptionFile = fs.readFileSync(path.join(articlePath, 'description.html'), 'utf8');
+            description = dot.template(descriptionFile)();
+        } catch(er) {}
 
         var article = {
             text: dot.template(pageFile)(),
-            description: dot.template(descriptionFile)(),
+            description: description,
             config: require(path.join(articlePath, 'config.json'))
         };
 

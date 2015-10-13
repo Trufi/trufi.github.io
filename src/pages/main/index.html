@@ -2,8 +2,13 @@
     {{~it.list :value:index}}
         <div class="mainPage__article">
             <h2><a href="{{=value.config.href}}">{{=value.config.title}}</a></h2>
-            <div class="mainPage__articleDescription">{{=value.description}}</div>
-            <div class="mainPage__articleDate">{{=value.config.date}} <a href="{{=value.config.href}}">Читать</a></div>
+
+			{{? value.description}}
+            	<div class="mainPage__articleDescription">{{=value.description}}</div>
+            {{?}}
+			
+			<div class="mainPage__readButton"><a href="{{=value.config.href}}">Читать дальше</a></div>
+            <div class="mainPage__articleDate">{{=value.config.date}}</div>
         </div>
     {{~}}
 </div>
