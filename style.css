@@ -118,7 +118,12 @@ a:hover {
 
 }
 
+.article__bottom {
+    margin: 0 0 10px;
+}
+
 .article__date {
+    display: inline-block;
     color: #7f7f7f;
     font-size: 0.88em;
 }
@@ -126,4 +131,15 @@ a:hover {
 .author__contacts {
     margin: 0 0 0 25px;
     list-style: square outside;
+}
+
+.article_toTopButton {
+    display: inline-block;
+    cursor: pointer;
+    color: #535353;
+    
+}
+
+.article_toTopButton:hover {
+    color: #7b7b7b;
 }

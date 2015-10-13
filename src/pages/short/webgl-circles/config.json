@@ -3,5 +3,5 @@
   "titleHtml": "WebGL рисует не только треугольники",
   "description": "test",
   "date": "08.10.2015",
-  "draft": true
+  "draft": false
 }
