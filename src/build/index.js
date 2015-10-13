@@ -30,6 +30,7 @@ var footer = templates.footer();
 var mainPage = getMainPage(config);
 var mainPageHtml = templates.main({
     titleHtml: mainPage.config.titleHtml,
+    description: mainPage.config.titleHtml,
     styleHref: config.serverDistPath + '/style.css',
 
     header: getHeader(config, config.serverDistPath),
@@ -42,6 +43,7 @@ fs.writeFileSync(path.join(config.distPath, 'index.html'), mainPageHtml, 'utf8')
 var authorPage = getAuthorPage(config);
 var authorPageHtml = templates.main({
     titleHtml: authorPage.config.titleHtml,
+    description: authorPage.config.titleHtml,
     styleHref: config.serverDistPath + '/style.css',
 
     header: getHeader(config, config.serverDistPath + '/author'),
@@ -54,6 +56,7 @@ fs.writeFileSync(path.join(config.distPath, 'author.html'), authorPageHtml, 'utf
 shortList.forEach(function(blog) {
     var blogPage = templates.main({
         titleHtml: blog.config.titleHtml,
+        description: blog.config.description,
         styleHref: config.serverDistPath + '/style.css',
 
         header: getHeader(config, blog.config.href),
