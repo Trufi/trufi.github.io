@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebGL wheel in one triangle</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<script id="vertexShader" type="x-shader/x-vertex">
+    attribute vec3 vertexVector;
+    attribute vec2 vc;
+    varying vec2 u_vc;
+
+    void main(void) {
+        u_vc = vc;
+        gl_Position = vec4(vertexVector, 1.0);
+    }
+</script>
+
+<script id="fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;
+    uniform float angle;
+    varying vec2 u_vc;
+
+    float minR = 0.15;
+    float Pi = 3.1415;
+
+    void main(void) {
+        vec2 c = vec2(0.27, 0.27);
+        float angleFromCenter = atan(u_vc.y - c.y, u_vc.x - c.x) + angle;
+        float R;
+
+        if (mod(floor(angleFromCenter / (Pi / 10.0)), 2.0) == 0.0) {
+            R = 0.25;
+        } else {
+            R = 0.2;
+        }
+
+        float distance = (u_vc.x - c.x) * (u_vc.x - c.x) + (u_vc.y - c.y) * (u_vc.y - c.y);
+
+        if (distance < R * R && distance > minR * minR) {
+            gl_FragColor = vec4(0.2, 0.501, 0.0, 1.0);
+        } else {
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+
+    }
+</script>
+
+<script>
+    var size = Math.min(window.innerWidth, window.innerHeight);
+
+    var canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    document.body.appendChild(canvas);
+
+    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    gl.viewport(0, 0, size, size);
+
+    var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+
+    gl.shaderSource(vertexShader, document.getElementById('vertexShader').text);
+    gl.compileShader(vertexShader);
+
+    gl.shaderSource(fragmentShader, document.getElementById('fragmentShader').text);
+    gl.compileShader(fragmentShader);
+
+    var program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    var angleUniform = gl.getUniformLocation(program, 'angle');
+    var vertexVectorAttribution = gl.getAttribLocation(program, 'vertexVector');
+    var uvAttribution = gl.getAttribLocation(program, 'vc');
+
+    var vertexBuffer = gl.createBuffer();
+    var vertices = [
+        -1, -1, 0,
+        1, -1, 0,
+        -1, 1, 0
+    ];
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+    var uvBuffer = gl.createBuffer();
+    var uv = [
+        0, 0,
+        1, 0,
+        0, 1
+    ];
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
+
+    var lastRenderTime = Date.now();
+    var angle = 0;
+
+    gl.useProgram(program);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+    gl.enableVertexAttribArray(uvAttribution);
+    gl.vertexAttribPointer(uvAttribution, 2, gl.FLOAT, false, 0, 0);
+
+    gl.uniform1f(angleUniform, angle);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+    gl.enableVertexAttribArray(vertexVectorAttribution);
+    gl.vertexAttribPointer(vertexVectorAttribution, 3, gl.FLOAT, false, 0, 0);
+
+    function render() {
+        requestAnimationFrame(render);
+
+        var time = Date.now();
+        var dt = lastRenderTime - time;
+
+        angle += dt / 10000;
+        gl.uniform1f(angleUniform, angle);
+
+        gl.clearColor(1.0, 1.0, 1.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+        lastRenderTime = time;
+    }
+
+    render();
+</script>
+</body>
+</html>

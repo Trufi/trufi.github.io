@@ -108,6 +108,15 @@ a:hover {
     margin: 40px 0;
 }
 
+.article li {
+    margin: 0 0 0 25px;
+    list-style: square outside;
+}
+
+.article ul {
+    margin: 20px 0;
+}
+
 .article__img {
     margin: 30px 0;
     text-align: center;
@@ -130,11 +139,6 @@ a:hover {
     display: inline-block;
     color: #7f7f7f;
     font-size: 0.88em;
-}
-
-.author__contacts {
-    margin: 0 0 0 25px;
-    list-style: square outside;
 }
 
 .article_toTopButton {

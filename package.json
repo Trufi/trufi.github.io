@@ -16,6 +16,7 @@
     "dot": "^1.0.3"
   },
   "devDependencies": {
-    "chokidar-cli": "^1.0.1"
+    "chokidar-cli": "^1.0.1",
+    "ncp": "^2.0.0"
   }
 }

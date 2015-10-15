@@ -19,22 +19,17 @@ module.exports = function(config) {
         } catch(er) {}
 
         var article = {
-            text: dot.template(pageFile)(),
+            text: dot.template(pageFile)({
+                sourcePath: config.sourcePath + '/src/pages/short/webgl-circles',
+            }),
             description: description,
-            config: require(path.join(articlePath, 'config.json'))
+            config: require(path.join(articlePath, 'config.json')),
         };
 
         article.config.name = dirName;
         article.config.href = config.serverDistPath + '/short/' + dirName;
 
         article.text = templates.article(article);
-
-        var articleDirectoryNames = fs.readdirSync(path.join(articlePath));
-
-        // add article images
-        if (articleDirectoryNames.indexOf('images') !== -1) {
-            article.images = fs.readdirSync(path.join(articlePath, 'images'));
-        }
 
         return article;
     });

@@ -17,7 +17,7 @@
 </p>
 
 <div class="article__img">
-    <img src="./images/triangle.svg" alt="Треугольник" width="200">
+    <img src="./assets/triangle.svg" alt="Треугольник" width="200">
     <div class="article__imgDesc">
         Да, треугольники, и больше ничего.
     </div>
@@ -28,7 +28,7 @@
 </p>
 
 <div class="article__img">
-    <img src="./images/square.svg" alt="Квадрат из двух треугольников" width="200">
+    <img src="./assets/square.svg" alt="Квадрат из двух треугольников" width="200">
 </div>
 
 <p>
@@ -36,7 +36,7 @@
 </p>
 
 <div class="article__img">
-    <img src="./images/circle.svg" alt="Триангуляция круга" width="200">
+    <img src="./assets/circle.svg" alt="Триангуляция круга" width="200">
     <div class="article__imgDesc">
         Сколько на картинке треугольников? 18!
     </div>
@@ -48,8 +48,8 @@
 
 <div class="article__img">
     <div style="position: relative; width: 200px; height: 200px; display: inline-block; text-align: left;">
-        <img style="position: absolute; width: 200px; display: none;" class="spoiler" src="./images/one_triangle.svg" alt="Один треугольник">
-        <img style="position: absolute; width: 200px;" src="./images/one_circle.svg" alt="Круг, нарисованный простым способом">
+        <img style="position: absolute; width: 200px; display: none;" class="spoiler" src="./assets/one_triangle.svg" alt="Один треугольник">
+        <img style="position: absolute; width: 200px;" src="./assets/one_circle.svg" alt="Круг, нарисованный простым способом">
     </div>
     <div class="article__imgDesc">
         Как вы думаете, сколько здесь используется треугольников? <span class="showspoiler">Показать</span> <span class="spoilerdesc">Всего 1!</span>
@@ -64,7 +64,7 @@
 </p>
 
 <div class="article__img">
-    <img src="./images/coord.svg" alt="Система координат" width="200">
+    <img src="./assets/coord.svg" alt="Система координат" width="200">
 </div>
 
 <p>
@@ -74,7 +74,7 @@
 <p>
     На примере выше мы говорим, что если пиксель находится в круге с&nbsp;центром&nbsp;(Cx,&nbsp;Cy) и&nbsp;радиусом&nbsp;R, т.е.
     <span class="article__img" style="display: inline-block; width: 100%; margin: 15px 0;">
-        <img src="./images/formula.svg" alt="(X - Cx)^2 + (Y - Cy)^2 < R^2" style="width: 300px; height: 40px;">
+        <img src="./assets/formula.svg" alt="(X - Cx)^2 + (Y - Cy)^2 < R^2" style="width: 300px; height: 40px;">
     </span>
     то закрашиваем его в синий цвет.
 </p>
@@ -86,13 +86,19 @@
 <div class="article__img">
     <div id="wheel">
         <div id="wheel-without-webgl" class="article__img" style="display: none;">
-            <img src="./images/wheel.png" alt="Шестерёнка, если нет WebGL" width="200">
+            <img src="./assets/wheel.png" alt="Шестерёнка, если нет WebGL" width="200">
             <div class="article__imgDesc">
                 Увы, шестерёнка не крутится, т.к. ваш браузер не поддерживает WebGL :(
             </div>
         </div>
     </div>
 </div>
+
+<ul><b>Полезности</b>:
+    <li>Первый пример с кругом: <a href="./assets/circle.html">страница</a>, <a href="{{=it.sourcePath}}/assets/circle.html">исходник</a></li>
+    <li>Второй пример с шестерёнкой: <a href="./assets/wheel.html">страница</a>, <a href="{{=it.sourcePath}}/assets/wheel.html">исходник</a></li>
+    <li><a href="http://http.developer.nvidia.com/GPUGems3/gpugems3_ch25.html">Здесь</a> используется схожий подход для рисования векторных изображений в WebGL</li>
+</ul>
 
 <script>
     (function() {
@@ -188,25 +194,13 @@
         gl.shaderSource(vertexShader, document.getElementById('vertexShaderWheel').text);
         gl.compileShader(vertexShader);
 
-        if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-            console.log(gl.getShaderInfoLog(vertexShader));
-        }
-
         gl.shaderSource(fragmentShader, document.getElementById('fragmentShaderWheel').text);
         gl.compileShader(fragmentShader);
-
-        if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-            console.log(gl.getShaderInfoLog(fragmentShader));
-        }
 
         var program = gl.createProgram();
         gl.attachShader(program, vertexShader);
         gl.attachShader(program, fragmentShader);
         gl.linkProgram(program);
-
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            console.log('Could not initialize shaders');
-        }
 
         var angleUniform = gl.getUniformLocation(program, 'angle');
         var vertexVectorAttribution = gl.getAttribLocation(program, 'vertexVector');

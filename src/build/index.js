@@ -1,3 +1,4 @@
+var ncp = require('ncp').ncp;
 var path = require('path');
 var fs = require('fs');
 
@@ -8,7 +9,9 @@ var saveStyle = require('./saveStyle');
 
 var config = {
     distPath: path.join(__dirname, '../..'),
-    serverDistPath: ''
+    serverDistPath: '',
+    serverAbsoluteDistPath: 'https://trufi.github.io',
+    sourcePath: 'https://github.com/Trufi/trufi.github.io/blob/master'
 };
 
 config.topMenu = {
@@ -30,7 +33,7 @@ var footer = templates.footer();
 var mainPage = getMainPage(config);
 var mainPageHtml = templates.main({
     titleHtml: mainPage.config.titleHtml,
-    description: mainPage.config.titleHtml,
+    description: "Вебные заметки @trufid",
     styleHref: config.serverDistPath + '/style.css',
 
     header: getHeader(config, config.serverDistPath),
@@ -43,7 +46,7 @@ fs.writeFileSync(path.join(config.distPath, 'index.html'), mainPageHtml, 'utf8')
 var authorPage = getAuthorPage(config);
 var authorPageHtml = templates.main({
     titleHtml: authorPage.config.titleHtml,
-    description: authorPage.config.titleHtml,
+    description: "Вебные заметки @trufid",
     styleHref: config.serverDistPath + '/style.css',
 
     header: getHeader(config, config.serverDistPath + '/author'),
@@ -59,6 +62,9 @@ shortList.forEach(function(blog) {
         description: blog.config.description,
         styleHref: config.serverDistPath + '/style.css',
 
+        pageHref: config.serverDistPath + '/short',
+        pageAbsoluteHref: config.serverAbsoluteDistPath + '/short',
+
         header: getHeader(config, blog.config.href),
         footer: footer,
         body: blog.text
@@ -68,16 +74,15 @@ shortList.forEach(function(blog) {
         fs.mkdirSync(path.join(config.distPath, 'short', blog.config.name));
     } catch(e) {}
 
-    if (blog.images) {
-        try {
-            fs.mkdirSync(path.join(config.distPath, 'short', blog.config.name, 'images'));
-        } catch(e) {}
-
-        blog.images.forEach(function(name) {
-            var image = fs.readFileSync(path.join(__dirname, '../pages/short', blog.config.name, 'images', name));
-            fs.writeFileSync(path.join(config.distPath, 'short', blog.config.name, 'images', name), image);
-        });
-    }
+    // копируем ассеты
+    ncp(
+        path.join(__dirname, '../pages/short', blog.config.name, 'assets'),
+        path.join(config.distPath, 'short', blog.config.name, 'assets'),
+        function (error) {
+            if (error) {
+                return console.error(error);
+            }
+    });
 
     fs.writeFileSync(path.join(config.distPath, 'short', blog.config.name, 'index.html'), blogPage, 'utf8');
 });
