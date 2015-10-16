@@ -10,7 +10,5 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <g id="layer1" transform="translate(-716.43897,-0.29848842)">
-  <path id="path3980" d="m733.12,20.839c0,3.8181-3.1234,6.9132-6.9764,6.9132-3.8529,0-6.9764-3.0952-6.9764-6.9132,0-3.8181,3.1234-6.9132,6.9764-6.9132,3.8529,0,6.9764,3.0952,6.9764,6.9132z" stroke-dashoffset="0" stroke="#37abc8" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="0.5" fill="#37abc8"/>
- </g>
+ <path d="m16.681,20.541c0,3.8181-3.1234,6.9132-6.9764,6.9132-3.8529,0-6.9764-3.0952-6.9764-6.9132,0-3.8181,3.1234-6.9132,6.9764-6.9132,3.8529,0,6.9764,3.0952,6.9764,6.9132z" stroke-dashoffset="0" stroke="#37abc8" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="0.5" fill="#37abc8"/>
 </svg>
