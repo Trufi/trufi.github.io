@@ -10,11 +10,11 @@ ul {
 
 a {
     text-decoration: none;
-    color: #535353;
+    color: #4078c0;
 }
 
 a:hover {
-    color: #7b7b7b;
+    text-decoration: underline;
 }
 
 .page {
@@ -49,6 +49,12 @@ a:hover {
 .topMenu__tab a {
     display: inline-block;
     padding: 0 2px;
+    color: #535353;
+}
+
+.topMenu__tab a:hover {
+    text-decoration: none;
+    color: #7b7b7b;
 }
 
 .topMenu__tab._disable {
@@ -79,12 +85,21 @@ a:hover {
     font-weight: 700;
 }
 
+.mainPage__article h2 a {
+    color: #535353;
+}
+
+.mainPage__article h2 a:hover {
+    color: #7b7b7b;
+    text-decoration: none;
+}
+
 .mainPage__articleDescription {
 
 }
 
 .mainPage__readButton {
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .mainPage__articleDate {
