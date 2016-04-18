@@ -1,6 +1,6 @@
 {
   "name": "trufi.github.io",
-  "description": "",
+  "description": "Вебные заметки @trufid",
   "private": true,
   "scripts": {
     "start": "chokidar \"src/**/*.*\" --verbose -c \"npm run build\"",
