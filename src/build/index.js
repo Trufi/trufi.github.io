@@ -1,6 +1,12 @@
+'use strict';
+
+var mkdirp = require('mkdirp');
 var ncp = require('ncp').ncp;
 var path = require('path');
+var dot = require('dot');
 var fs = require('fs');
+
+var join = path.join;
 
 var getMainPage = require('./getMainPage');
 var getAuthorPage = require('./getAuthorPage');
@@ -23,14 +29,83 @@ config.topMenu = {
 };
 
 var templates = require('./getTemplates')();
-var shortList = require('./getBlogList')(config);
+
+// create dist folder
+mkdirp.sync(config.distPath);
 
 saveStyle(config);
 
 var footer = templates.footer();
 
+const projectSrc = join(__dirname, '..');
+const pagesSrc = 'pages/short';
+const mainPageArticleList = [];
+
+const articleDirNames = fs.readdirSync(join(projectSrc, pagesSrc));
+articleDirNames.forEach(createArticle);
+
+function createArticle(articleDirName) {
+    const articleSrc = join(projectSrc, pagesSrc, articleDirName);
+    const articleConfig = require(join(articleSrc, 'config.json'));
+
+    if (articleConfig.draft) { return; }
+
+    articleConfig.sourcePath = config.sourcePath + '/src/' + pagesSrc + '/' + articleDirName;
+    articleConfig.href = articleConfig.href || (config.serverDistPath + '/short/' + articleDirName);
+    articleConfig.name = articleDirName;
+    articleConfig.readmore = articleConfig.readmore || 'Читать дальше';
+
+    const descriptionTemplate = fs.readFileSync(join(articleSrc, 'description.html'), 'utf8');
+    const descriptionText = dot.template(descriptionTemplate)(articleConfig);
+
+    let fullTemplate;
+
+    try {
+        fullTemplate = fs.readFileSync(join(articleSrc, 'index.html'), 'utf8');
+    } catch (e) {}
+
+    mkdirp.sync(join(config.distPath, 'short', articleDirName));
+
+    // копируем ассеты
+    ncp(
+        join(articleSrc, 'assets'),
+        join(config.distPath, 'short', articleDirName, 'assets'),
+        function (error) {
+            if (error) {
+                return console.error(error);
+            }
+    });
+
+    if (fullTemplate) {
+        const fullText = dot.template(fullTemplate)(articleConfig);
+
+        const page = templates.main({
+            titleHtml: articleConfig.titleHtml,
+            description: articleConfig.description,
+            styleHref: config.serverDistPath + '/style.css',
+
+            pageHref: config.serverDistPath + '/short',
+            pageAbsoluteHref: config.serverAbsoluteDistPath + '/short',
+
+            header: getHeader(config, articleConfig.href),
+            footer: footer,
+            body: templates.article({
+                text: fullText,
+                config: articleConfig
+            })
+        });
+
+        fs.writeFileSync(join(config.distPath, 'short', articleDirName, 'index.html'), page, 'utf8');
+    }
+
+    mainPageArticleList.push({
+        config: articleConfig,
+        description: descriptionText
+    });
+}
+
 // main page
-var mainPage = getMainPage(config);
+var mainPage = getMainPage(config, mainPageArticleList);
 var mainPageHtml = templates.main({
     titleHtml: mainPage.config.titleHtml,
     description: "Вебные заметки @trufid",
@@ -54,36 +129,3 @@ var authorPageHtml = templates.main({
     body: authorPage.text
 });
 fs.writeFileSync(path.join(config.distPath, 'author.html'), authorPageHtml, 'utf8');
-
-// short pages
-shortList.forEach(function(blog) {
-    var blogPage = templates.main({
-        titleHtml: blog.config.titleHtml,
-        description: blog.config.description,
-        styleHref: config.serverDistPath + '/style.css',
-
-        pageHref: config.serverDistPath + '/short',
-        pageAbsoluteHref: config.serverAbsoluteDistPath + '/short',
-
-        header: getHeader(config, blog.config.href),
-        footer: footer,
-        body: blog.text
-    });
-
-    try {
-        fs.mkdirSync(path.join(config.distPath, 'short', blog.config.name));
-    } catch(e) {}
-
-    // копируем ассеты
-    ncp(
-        path.join(__dirname, '../pages/short', blog.config.name, 'assets'),
-        path.join(config.distPath, 'short', blog.config.name, 'assets'),
-        function (error) {
-            if (error) {
-                return console.error(error);
-            }
-    });
-
-    fs.writeFileSync(path.join(config.distPath, 'short', blog.config.name, 'index.html'), blogPage, 'utf8');
-});
-
