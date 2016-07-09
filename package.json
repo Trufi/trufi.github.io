@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "chokidar-cli": "^1.0.1",
+    "csso": "^2.2.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0"
   }
