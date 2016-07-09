@@ -13,4 +13,19 @@
         {{?}}
         <div class="article_toTopButton" onclick="window.scrollTo(0,0)">Наверх</div>
     </div>
+
+    {{? it.config.comments }}
+        <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function() {
+                this.page.identifier = {{=it.config.name}}
+            };
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = '//trufigithubio.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    {{?}}
 </div>

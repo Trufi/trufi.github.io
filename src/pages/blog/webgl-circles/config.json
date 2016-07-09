@@ -3,5 +3,6 @@
   "titleHtml": "WebGL рисует не только треугольники",
   "description": "Заметка о том, что WebGL может рисовать не только триангулированные объекты",
   "date": "16.10.2015",
-  "draft": false
+  "draft": false,
+  "comments": true
 }
