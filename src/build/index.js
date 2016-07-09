@@ -14,7 +14,7 @@ var getHeader = require('./getHeader');
 var saveStyle = require('./saveStyle');
 
 var config = {
-    distPath: path.join(__dirname, '../..'),
+    distPath: join(__dirname, '../..'),
     serverDistPath: '',
     serverAbsoluteDistPath: 'https://trufi.github.io',
     sourcePath: 'https://github.com/Trufi/trufi.github.io/blob/master'
@@ -22,8 +22,7 @@ var config = {
 
 config.topMenu = {
     tabs: [
-        {text: 'Short', href: config.serverDistPath + '/'},
-        {text: 'Long', disable: true},
+        {text: 'Blog', href: config.serverDistPath + '/'},
         {text: 'Author', href: config.serverDistPath + '/author'}
     ]
 };
@@ -38,7 +37,7 @@ saveStyle(config);
 var footer = templates.footer();
 
 const projectSrc = join(__dirname, '..');
-const pagesSrc = 'pages/short';
+const pagesSrc = 'pages/blog';
 const mainPageArticleList = [];
 
 const articleDirNames = fs.readdirSync(join(projectSrc, pagesSrc));
@@ -51,7 +50,7 @@ function createArticle(articleDirName) {
     if (articleConfig.draft) { return; }
 
     articleConfig.sourcePath = config.sourcePath + '/src/' + pagesSrc + '/' + articleDirName;
-    articleConfig.href = articleConfig.href || (config.serverDistPath + '/short/' + articleDirName);
+    articleConfig.href = articleConfig.href || (config.serverDistPath + '/blog/' + articleDirName);
     articleConfig.name = articleDirName;
     articleConfig.readmore = articleConfig.readmore || 'Читать дальше';
 
@@ -64,12 +63,12 @@ function createArticle(articleDirName) {
         fullTemplate = fs.readFileSync(join(articleSrc, 'index.html'), 'utf8');
     } catch (e) {}
 
-    mkdirp.sync(join(config.distPath, 'short', articleDirName));
+    mkdirp.sync(join(config.distPath, 'blog', articleDirName));
 
     // копируем ассеты
     ncp(
         join(articleSrc, 'assets'),
-        join(config.distPath, 'short', articleDirName, 'assets'),
+        join(config.distPath, 'blog', articleDirName, 'assets'),
         function (error) {
             if (error) {
                 return console.error(error);
@@ -84,8 +83,8 @@ function createArticle(articleDirName) {
             description: articleConfig.description,
             styleHref: config.serverDistPath + '/style.css',
 
-            pageHref: config.serverDistPath + '/short',
-            pageAbsoluteHref: config.serverAbsoluteDistPath + '/short',
+            pageHref: config.serverDistPath + '/blog',
+            pageAbsoluteHref: config.serverAbsoluteDistPath + '/blog',
 
             header: getHeader(config, articleConfig.href),
             footer: footer,
@@ -95,7 +94,7 @@ function createArticle(articleDirName) {
             })
         });
 
-        fs.writeFileSync(join(config.distPath, 'short', articleDirName, 'index.html'), page, 'utf8');
+        fs.writeFileSync(join(config.distPath, 'blog', articleDirName, 'index.html'), page, 'utf8');
     }
 
     mainPageArticleList.push({
