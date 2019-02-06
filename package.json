@@ -1,24 +1,35 @@
 {
   "name": "trufi.github.io",
-  "description": "Вебные заметки @trufid",
   "private": true,
-  "scripts": {
-    "start": "chokidar \"src/**/*.*\" --verbose -c \"npm run build\"",
-    "build": "node src/build"
-  },
+  "description": "Заметки @trufid",
   "author": {
     "name": "Mstislav Zhivodkov",
     "email": "stevemyz@gmail.com",
     "url": "https://trufi.github.io/"
   },
   "license": "MIT",
+  "scripts": {
+    "start": "npm run develop",
+    "build": "gatsby build",
+    "dev": "gatsby develop",
+    "serve": "gatsby serve",
+    "test": "npm run lint && npm run prettier",
+    "prettier": "prettier --check \"./**/*.{js,json,html,css}\"",
+    "lint": "eslint src"
+  },
   "dependencies": {
-    "dot": "^1.0.3"
+    "gatsby": "^2.0.115",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "chokidar-cli": "^1.0.1",
-    "csso": "^2.2.0",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0"
+    "eslint": "^5.13.0",
+    "eslint-plugin-react": "^7.12.4",
+    "gatsby-plugin-typography": "^2.2.7",
+    "gatsby-source-filesystem": "^2.0.20",
+    "gatsby-transformer-remark": "^2.2.4",
+    "react-typography": "^0.16.18",
+    "typography": "^0.16.18",
+    "typography-theme-irving": "^0.16.18"
   }
 }
